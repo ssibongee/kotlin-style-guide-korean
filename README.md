@@ -80,3 +80,42 @@ class MyTestCase {
      @Test fun ensureEverythingWorks_onAndroid() { /*...*/ }
 }
 ```
+
+## Property Names
+상수 이름(`const`로 표시된 속성 또는 완전히 변경 불가능한 데이터를 보유하고있는 커스텀 `get` 함수가 없는 최상위 또는 `object`의 `val`속성)은 `_`로 구분된 대문자로 이루어진 이름을 사용해야 합니다. ([screaming snake case](https://papago.naver.net/apis/site/proxy?url=https%3A%2F%2Fen.wikipedia.org%2Fwiki%2FSnake_case))
+```kotlin
+const val MAX_COUNT = 8
+val USER_NAME_FIELD = "UserName"
+```
+동작 또는 변경 가능한 데이터가 있는 객체를 보유하는 최상위 또는 `object`의 속성 이름은 카멜 케이스 대소문자 이름을 사용해야 합니다.
+```kotlin
+val mutableCollection: MutableSet<String> = HashSet()
+```
+싱글톤 객체에 대한 참조를 보유하는 속성의 이름은 `object` 선언과 동일한 명명 스타일을 사용할 수 있습니다.
+```kotlin
+val PersonComparator: Comparator<Person> = /*...*/
+```
+열거형 상수의 경우 사용법에 따라서 대문자와 `_`로 구분된 이름(screaming snake case) (`enum class Color { RED, GREEN }`) 또는 대문자 카멜 케이스 이름을 사용할 수 있습니다.
+
+## Naming for Backing Properties
+클래스에는 개념적으로 동일한 두 개의 속성이 있지만 하나는 `public` API의 일부이고 다른 하나는 구현 세부 정보인 경우 `private` 속성 이름의 접두사로 `_`를 사용합니다.
+```kotlin
+class C {
+     private val _elementList = mutableListOf<Element>()
+     
+     val elementList: List<Element>
+          get() = _elementList
+}
+```
+
+## Choose Good Names
+클래스 이름은 일반적으로 명사 또는 클래스가 무엇인지를 설명하는 명사구 입니다: `List`, `PersonReader`.
+
+메서드 이름은 일반적으로 메서드가 하는 일을 나타내는 동사 또는 동사구 입니다: `close`, `readPersons`. 이름은 또한 메서드가 객체를 변경하거나 새로운 객체를 반환하는지 여부를 암시해야 합니다. 예를들어 `sort`는 컬렉션을 제자리에서 정렬하고, `sorted`는 컬렉션의 정렬된 복사본을 반환합니다.
+
+이름은 엔티티의 목적이 무엇인지 명확해야 하기 때문에 이름에 의미없는 단어(`Manager`, `Wrapper`)를 사용하지 않는 것이 가장 좋습니다.
+
+선언된 이름의 일부로 줄임말(acronym)를 사용할 때 두 글자로 구성된 경우(`IOStream`) 대문자로 표시합니다. 길이가 긴 경 첫글자만 대문자로 표시합니다. (`XmlFormatter`, `HttpInputStream`)
+
+# Formatting
+
