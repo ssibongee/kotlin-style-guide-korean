@@ -119,3 +119,84 @@ class C {
 
 # Formatting
 
+## Indentation
+들여쓰기에는 4개의 공백을 사용합니다. 탭을 사용하지 마십시오.
+
+중괄호의 경우 여는 중괄호 구문이 시작하는 줄 끝에 위치하고 닫는 중괄호를 여는 구문과 수평으로 정렬된 별도의 줄에 위치시킵니다.
+```kotlin
+if (elements != null) {
+     for (element in elements) {
+          // ...
+     }
+}
+```
+> Kotlin에서 세미콜론은 선택사항이므로 줄 바꿈이 중요합니다. 언어 디자인은 Java 스타일 중괄호를 사용하며 다른 형식 지정 스타일을 사용하려고하면 의도치 않은 동작이 발생할 수 있습니다.
+
+## Horizontal Whitespace
+- 이항 연산자 주변에 공백을 넣습니다.(`a + b`)
+  Exception: 범위 연산자 주변에 공백을 두지 마십시오. (`0..i`)
+- 단항 연산자 주변에 공백을 두지 마십시오. (`a++`)
+- 제어 흐름 키워드(`if`, `when`, `for` 및 `while`)와 해당 여는 괄호 사이에 공백을 넣습니다.
+- 기본 생성자 선언, 메서드 선언 또는 메서드 호출에서 여는 괄호 앞에 공백을 두지 마십시오.
+```kotlin
+class A(val x: Int)
+
+fun foo(x: Int) { ... }
+
+fun bar() {
+    foo(1)
+}
+```
+- `(`, `[` 또는 `]`, `)` 앞에 공백을 두지 마십시오.
+- `.` 또는 `?.` 주변에 공백을 두지 마십시오. `foo.bar().filter { it > 2 }.joinToString()` , `foo?.bar()`
+- `//` 뒤에 공백을 넣으세요. `// This is a comment`
+- 타입 파라미터를 지정하는데 사용되는 꺽쇠 괄호 주위에 공백을 두지 마십시오. `class Map<K, V> { ... }`
+- `::` 주위에 공백을 두지 마십시오. `Foo::class`, `String::length`
+- `nullable` 타입을 표시하는데 사용되는 `?` 전에 공백을 두지 마십시오. `String?`
+
+일반적으로 어떠한 종류의 수평 정렬을 피하세요. 식별자의 이름을 길이가 다른 이름으로 변경해도 선언 형식 또는 사용 방법에 영향을 주지 않아야 합니다.
+
+## Colon
+다음의 경우 `:` 앞에 공백을 넣으세요.
+- 타입과 슈퍼 타입을 구분하기 위해 사용되는 경우
+- 슈퍼 클래스 생성자나 같은 클래스의 다른 생성자에게 위임하는 경우
+- `object` 키워드 뒤에 
+`:` 이 타입과 선언을 구분할 때는 앞에 공백을 두지 마세요.
+
+항상 `:` 뒤에 공백을 넣으세요.
+```kotlin
+abstract class Foo<out T : Any> : IFoo {
+    abstract fun foo(a: Int): T
+}
+
+class FooImpl : Foo() {
+    constructor(x: String) : this(x) { /*...*/ }
+
+    val x = object : IFoo { /*...*/ }
+}
+```
+
+## Class Headers
+적은 수의 기본 생성자 매개변수들이 있는 클래스는 한 줄에 작성할 수 있습니다.
+```kotlin
+class Person(id: Int, name: String)
+```
+
+헤더가 긴 클래스는 각 기본 생성자 매개변수가 들여쓰기가 있는 별도의 라인에 위치하도록 형식을 지정해야 합니다. 또한 닫는 괄호는 새로운 줄에 위치해야합니다. 상속을 사용하는 경우 슈퍼 클래스 생성자 호출 또는 구현된 인터페이스 목록이 괄호와 같은 줄에 있어야 합니다.
+```kotlin
+class Person(
+    id: Int,
+    name: String,
+    surname: String
+) : Human(id, name) { /*...*/ }
+```
+
+다중 인터페이스의 경우 슈퍼 클래스 생성자 호출을 먼저 배치하고 다음으로 각 인터페이스를 다른 라인에 배치해야 합니다.
+```kotlin
+class Person(
+    id: Int,
+    name: String,
+    surname: String
+) : Human(id, name),
+    KotlinMaker { /*...*/ }
+```
